@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Don't be angry pleasee? 🥺</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background: radial-gradient(circle at center, #ffeff2 0%, #ffd0d8 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: rgba(255, 71, 126, 0.15);
+            filter: blur(80px);
+            border-radius: 50%;
+            z-index: 1;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.88);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            padding: 2.5rem 2rem;
+            border-radius: 28px;
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 20px 40px rgba(214, 51, 108, 0.15), 0 2px 10px rgba(0, 0, 0, 0.03);
+            text-align: center;
+            max-width: 400px;
+            width: 88%;
+            position: relative;
+            z-index: 10;
+        }
+
+        .emoji-header {
+            font-size: 3.8rem;
+            margin-bottom: 0.8rem;
+            animation: pulse 1.8s infinite ease-in-out;
+            display: inline-block;
+        }
+
+        h1 {
+            color: #d6336c;
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            line-height: 1.35;
+            letter-spacing: -0.3px;
+        }
+
+        .btn-group {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+            min-height: 60px;
+            position: relative;
+        }
+
+        button {
+            padding: 12px 22px;
+            font-size: 0.98rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+            outline: none;
+        }
+
+        .btn-yes {
+            background-color: #ff477e;
+            color: white;
+            z-index: 2000;
+            position: relative;
+            transition: transform 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .btn-yes:hover {
+            background-color: #ff0a54;
+            transform: scale(1.06);
+            box-shadow: 0 8px 20px rgba(255, 10, 84, 0.3);
+        }
+
+        .btn-no {
+            background-color: #f1f3f5;
+            color: #495057;
+            white-space: nowrap;
+            z-index: 999;
+            position: relative;
+            transition: left 0.18s cubic-bezier(0.25, 1, 0.5, 1), top 0.18s cubic-bezier(0.25, 1, 0.5, 1), transform 0.18s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        .popup-msg {
+            position: fixed;
+            background-color: #ff477e;
+            color: white;
+            font-size: 0.85rem;
+            font-weight: 700;
+            padding: 6px 14px;
+            border-radius: 20px;
+            pointer-events: none;
+            z-index: 3000;
+            box-shadow: 0 4px 12px rgba(255, 71, 126, 0.3);
+            animation: floatAndFade 1.2s ease-out forwards;
+        }
+
+        @keyframes floatAndFade {
+            0% { opacity: 0; transform: translateY(0) scale(0.8); }
+            20% { opacity: 1; transform: translateY(-10px) scale(1.05); }
+            80% { opacity: 1; }
+            100% { opacity: 0; transform: translateY(-35px) scale(0.9); }
+        }
+
+        .success-message {
+            display: none;
+            animation: fadeIn 0.6s ease-in-out forwards;
+        }
+
+        .success-message h2 {
+            color: #ff0a54;
+            font-size: 1.7rem;
+            margin-top: 1rem;
+            line-height: 1.35;
+            font-weight: 700;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.08); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.92); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .floating-heart {
+            position: absolute;
+            font-size: 1.6rem;
+            animation: floatUp 3.2s linear forwards;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(0) rotate(0deg) scale(0.8); opacity: 1; }
+            50% { opacity: 0.9; }
+            100% { transform: translateY(-105vh) rotate(360deg) scale(1.2); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="card" id="mainCard">
+        <div id="questionState">
+            <div class="emoji-header">🥺 🤌🏻</div>
+            <h1>Don't be angry pleasee?</h1>
+            <div class="btn-group" id="btnGroup">
+                <button class="btn-yes" id="yesBtn">I'm not angry I love you 😘</button>
+                <button class="btn-no" id="noBtn">No I'm still angry 😤</button>
+            </div>
+        </div>
+
+        <div class="success-message" id="successState">
+            <div class="emoji-header">😍😚❤️</div>
+            <h2>Mwahhh that's my man! I love you too 🫶🏻🥰</h2>
+        </div>
+    </div>
+
+    <script>
+        const yesBtn = document.getElementById('yesBtn');
+        const noBtn = document.getElementById('noBtn');
+        let dodgeCount = 0;
+
+        const messages = [
+            "No chance! 😜",
+            "Nahhh 🙈",
+            "Nopee! 🙅🏻‍♀️",
+            "Pleasee 🥺",
+            "Please please! 👉🏻👈🏻",
+            "I'm sorry! 💕",
+            "Nice try! 😂",
+            "Can't catch me! 🏃🏻‍♀️",
+            "Naahuhhh!!!!"
+        ];
+
+        function showPopup(x, y) {
+            const popup = document.createElement('div');
+            popup.className = 'popup-msg';
+            popup.innerText = messages[dodgeCount % messages.length];
+            
+            popup.style.left = `${x - 40}px`;
+            popup.style.top = `${y - 30}px`;
+
+            document.body.appendChild(popup);
+            setTimeout(() => popup.remove(), 1200);
+        }
+
+        function dodgeButton(e) {
+            if (e && e.cancelable) e.preventDefault();
+            e.stopPropagation();
+
+            const rect = noBtn.getBoundingClientRect();
+            const posX = rect.left + rect.width / 2;
+            const posY = rect.top;
+
+            showPopup(posX, posY);
+            dodgeCount++;
+
+            const btnWidth = noBtn.offsetWidth;
+            const btnHeight = noBtn.offsetHeight;
+
+            const padding = 24;
+            const maxX = window.innerWidth - btnWidth - padding;
+            const maxY = window.innerHeight - btnHeight - padding;
+
+            let randomX = Math.max(padding, Math.floor(Math.random() * maxX));
+            let randomY = Math.max(padding, Math.floor(Math.random() * maxY));
+
+            noBtn.style.position = 'fixed';
+            noBtn.style.left = `${randomX}px`;
+            noBtn.style.top = `${randomY}px`;
+
+            if (dodgeCount > 3) {
+                const scale = Math.max(0.65, 1 - (dodgeCount - 3) * 0.08);
+                noBtn.style.transform = `scale(${scale})`;
+            }
+        }
+
+        function acceptApology(e) {
+            if (e) e.stopPropagation();
+            document.getElementById('questionState').style.display = 'none';
+            document.getElementById('successState').style.display = 'block';
+            if (noBtn) noBtn.style.display = 'none';
+            createHearts();
+        }
+
+        function createHearts() {
+            const hearts = ['❤️', '💖', '💗', '💕', '💋', '😘', '🫶🏻', '✨'];
+            for (let i = 0; i < 40; i++) {
+                setTimeout(() => {
+                    const heart = document.createElement('div');
+                    heart.className = 'floating-heart';
+                    heart.innerHTML = hearts[Math.floor(Math.random() * hearts.length)];
+                    heart.style.left = Math.random() * 95 + 'vw';
+                    heart.style.top = '100vh';
+                    heart.style.animationDuration = (Math.random() * 1.8 + 2.2) + 's';
+                    document.body.appendChild(heart);
+
+                    setTimeout(() => heart.remove(), 4000);
+                }, i * 70);
+            }
+        }
+
+        yesBtn.addEventListener('click', acceptApology);
+        yesBtn.addEventListener('touchstart', acceptApology, { passive: true });
+
+        noBtn.addEventListener('mouseover', dodgeButton);
+        noBtn.addEventListener('click', dodgeButton);
+        noBtn.addEventListener('touchstart', dodgeButton, { passive: false });
+    </script>
+</body>
+</html>
